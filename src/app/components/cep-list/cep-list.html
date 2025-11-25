@@ -1,0 +1,23 @@
+<h2>Lista de CEPS</h2>
+
+<a routerLink="/ceps/novo" class="btn btn-primary">Novo CEP</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Numero</th>
+            <th>Ações</th>
+        </tr>
+     </thead>
+    <tbody>
+        <tr *ngFor="let cep of ceps | async">
+            <td>{{cep.codcep}}</td>
+            <td>{{cep.numerocep}}</td>
+            <td>
+                <a [routerLink]="['/ceps/editar', cep.codcep]" class="btn btn-edit">Editar</a>
+                <button (click)="deleteCep(cep.codcep!)" class="btn btn-delete">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

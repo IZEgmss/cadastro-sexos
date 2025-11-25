@@ -1,0 +1,43 @@
+<div class="page-container">
+  <div class="header-actions">
+    <h2>👥 Clientes</h2>
+    <a routerLink="/clientes/novo" class="btn btn-primary">
+      + Novo Cliente
+    </a>
+  </div>
+
+  <div class="table-container">
+    <table *ngIf="clientes$ | async as clientes; else loading">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Localização</th>
+          <th style="text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of clientes">
+          <td>#{{c.codcliente}}</td>
+          <td>
+            <div style="font-weight: 600;">{{c.nomecliente}}</div>
+            <div style="font-size: 0.75rem; color: #6b7280;">Nasc: {{c.datanasc}}</div>
+          </td>
+          <td>{{c.cpfcliente}}</td>
+          <td>
+            {{c.cidade?.nomecidade}} - {{c.cidade?.uf?.sigla}}<br>
+            <span style="font-size: 0.75rem; color: #9ca3af;">{{c.bairro?.nomebairro}}</span>
+          </td>
+          <td style="text-align: center;">
+            <a [routerLink]="['/clientes/editar', c.codcliente]" class="btn btn-edit">✏️</a>
+            <button (click)="deleteCliente(c.codcliente!)" class="btn btn-delete">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #loading>
+      <p style="text-align: center; padding: 2rem; color: #6b7280;">Carregando clientes...</p>
+    </ng-template>
+  </div>
+</div>
