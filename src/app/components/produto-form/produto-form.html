@@ -1,0 +1,43 @@
+<h2>{{isEdit ? 'Editar' : 'Novo'}} Produto</h2>
+
+<form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="nomeproduto">Nome do Produto:</label>
+        <input type="text" id="nomeproduto" [(ngModel)]="produto.nomeproduto" name="nomeproduto" required>
+    </div>
+
+    <div class="form-group">
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" [(ngModel)]="produto.valor" name="valor" required>
+    </div>
+
+    <div class="form-group">
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade" [(ngModel)]="produto.quantidade" name="quantidade" required>
+    </div>
+
+    <div class="form-group">
+        <label for="marca">Marca:</label>
+        <select id="marca" name="marca" [(ngModel)]="produto.marca" [compareWith]="compareMarca" required>
+            <option [ngValue]="undefined">Selecione uma marca...</option>
+            <option *ngFor="let m of marcas$ | async" [ngValue]="m">
+                {{ m.nomemarca }}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" [(ngModel)]="produto.tipo" [compareWith]="compareTipo" required>
+            <option [ngValue]="undefined">Selecione um tipo...</option>
+            <option *ngFor="let t of tipos$ | async" [ngValue]="t">
+                {{ t.nometipo }}
+            </option>
+        </select>
+    </div>
+
+    <div class="actions">
+        <button type="submit" [disabled]="!produto.nomeproduto">{{isEdit ? 'Atualizar' : 'Salvar'}}</button>
+        <a [routerLink]="['/produtos']" class="btn btn-cancel">Cancelar</a>
+    </div>
+</form> 

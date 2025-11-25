@@ -1,0 +1,65 @@
+<h2>Nova Venda</h2>
+
+<div class="form-group">
+    <label>Cliente:</label>
+    <select [(ngModel)]="selectedCliente" class="form-control">
+        <option [ngValue]="undefined">Selecione o Cliente...</option>
+        <option *ngFor="let c of clientes$ | async" [ngValue]="c">
+            {{c.nomecliente}}
+        </option>
+    </select>
+</div>
+
+<hr>
+<h3>Adicionar Produtos</h3>
+<div class="row" style="display: flex; gap: 10px; align-items: flex-end;">
+    <div style="flex: 2;">
+        <label>Produto:</label>
+        <select [(ngModel)]="tempProduto" class="form-control">
+            <option [ngValue]="undefined">Selecione...</option>
+            <option *ngFor="let p of produtos$ | async" [ngValue]="p">
+                {{p.nomeproduto}} (R$ {{p.valor}} - Est: {{p.quantidade}})
+            </option>
+        </select>
+    </div>
+    <div style="flex: 1;">
+        <label>Qtd:</label>
+        <input type="number" [(ngModel)]="tempQtd" min="1" class="form-control">
+    </div>
+    <div>
+        <button (click)="adicionarItem()" [disabled]="!tempProduto" class="btn btn-success">+</button>
+    </div>
+</div>
+
+<hr>
+<h3>Itens no Carrinho</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Subtotal</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of carrinho; let i = index">
+            <td>{{item.produto.nomeproduto}}</td>
+            <td>{{item.quantidade}}</td>
+            <td>{{item.subtotal | currency:'BRL'}}</td>
+            <td><button (click)="removerItem(i)" class="btn btn-delete">X</button></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2"><strong>Total</strong></td>
+            <td><strong>{{getTotal() | currency:'BRL'}}</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="actions" style="margin-top: 20px;">
+    <button (click)="onSubmit()" [disabled]="!selectedCliente || carrinho.length === 0" class="btn btn-primary">Finalizar Venda</button>
+    <a routerLink="/vendas" class="btn btn-cancel">Cancelar</a>
+</div>

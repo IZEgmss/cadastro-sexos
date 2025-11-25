@@ -1,0 +1,12 @@
+<h2>{{isEdit ? 'Editar' : 'Novo'}} Uf</h2>
+
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <label for="nomeuf">Nome do Uf:</label>
+        <input type="text" id="nomeuf" [(ngModel)]="uf.nomeuf" name="nomeuf" required>
+        <label for="siglauf">Sigla do Uf:</label>
+        <input type="text" id="siglauf" [(ngModel)]="uf.sigla" name="siglauf" required>
+    </div>
+<button type="submit">{{isEdit ? 'Atualizar' : 'Salvar'}}</button>
+    <a [routerLink]="['/ufs']" class="btn btn-cancel">Cancelar</a>
+</form>

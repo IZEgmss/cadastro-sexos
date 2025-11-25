@@ -1,0 +1,36 @@
+<div class="page-container">
+  <div class="header-actions">
+    <h2>🛒 Histórico de Vendas</h2>
+    <a routerLink="/vendas/novo" class="btn btn-primary">
+      + Nova Venda
+    </a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Cliente</th>
+        <th>Resumo</th>
+        <th style="text-align: center;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of vendas$ | async">
+        <td style="font-weight: bold; color: var(--primary-color);">#{{v.codvenda}}</td>
+        <td>{{v.datavenda | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td>
+          <div style="font-weight: 500;">{{v.cliente?.nomecliente}}</div>
+          <div style="font-size: 0.75rem; color: #6b7280;">CPF: {{v.cliente?.cpfcliente}}</div>
+        </td>
+        <td>
+          <span class="badge-items">{{v.itens.length || 0}} Itens</span>
+        </td>
+        <td style="text-align: center; width: 100px;">
+          <button (click)="deleteVenda(v.codvenda!)" class="btn btn-delete">Cancelar Venda</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

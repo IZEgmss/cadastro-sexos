@@ -1,0 +1,31 @@
+<h2>Lista de Produtos</h2>
+
+<a routerLink="/produtos/novo" class="btn btn-primary">Novo Produto</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Qtd</th>
+            <th>Marca</th>
+            <th>Tipo</th>
+            <th>Ações</th>
+        </tr>
+     </thead>
+    <tbody>
+        <tr *ngFor="let p of produtos | async">
+            <td>{{p.codproduto}}</td>
+            <td>{{p.nomeproduto}}</td>
+            <td>{{p.valor | currency:'BRL'}}</td>
+            <td>{{p.quantidade}}</td>
+            <td>{{p.marca?.nomemarca}}</td>
+            <td>{{p.tipo?.nometipo}}</td>
+            <td>
+                <a [routerLink]="['/produtos/editar', p.codproduto]" class="btn btn-edit">Editar</a>
+                <button (click)="deleteProduto(p.codproduto!)" class="btn btn-delete">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
